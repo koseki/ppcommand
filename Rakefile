@@ -10,6 +10,8 @@ begin
     gem.email = "koseki@gmail.com"
     gem.homepage = "http://github.com/koseki/ppcommand"
     gem.authors = ["KOSEKI Kengo"]
+    gem.add_dependency('json')
+    gem.add_dependency('xml-simple')
     gem.add_development_dependency "rspec", ">= 1.2.9"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
