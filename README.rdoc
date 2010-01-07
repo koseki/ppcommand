@@ -2,6 +2,16 @@
 
 pretty print YAML/JSON/XML.
 
+== Usage
+
+  $ pp --help
+  pp [options] [file|URI]
+      -y, --yaml                       parse YAML and pp.
+      -j, --json                       parse JSON and pp.
+      -x, --xml                        parse XML using REXML and pp.
+      -X, --xmlsimple                  parse XML using XMLSimple and pp.
+      -t, --text                       do not parse. print plain text.
+
 == Note on Patches/Pull Requests
  
 * Fork the project.
