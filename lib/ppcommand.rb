@@ -39,7 +39,7 @@ class PPCommand
     pp CSV.parse(source)
   end
 
-  def pp_csv2(source)
+  def pp_csvtable(source)
     require 'csv'
     data = CSV.parse(source)
     keys = data.shift
@@ -89,7 +89,7 @@ class PPCommand
     end
 
     opp.on("-c", "--csv", "parse CSV and pp."){|x| opts[:type] = "csv"}
-    opp.on("-C", "--csvtable", "parse CSV, add labels and pp."){|x| opts[:type] = "csvhash"}
+    opp.on("-C", "--csvtable", "parse CSV, add labels and pp."){|x| opts[:type] = "csvtable"}
     opp.on("-H", "--html", "parse HTML and pp."){|x| opts[:type] = "html"}
     opp.on("-j", "--json", "parse JSON and pp."){|x| opts[:type] = "json"}
     opp.on("-x", "--xml", "parse XML using REXML and pp."){|x| opts[:type] = "xml"}
@@ -151,8 +151,8 @@ class PPCommand
       pp_json(source)
     when "csv"
       pp_csv(source)
-    when "csvhash"
-      pp_csv_as_hash(source)
+    when "csvtable"
+      pp_csvtable(source)
     when "html"
       pp_html(source)
     when "text"

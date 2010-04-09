@@ -22,22 +22,54 @@ Parse and pp YAML/JSON/XML/CSV/HTML.
 
 Parse YAML and pp.
 
-  pp ./config/database.yml
+  $ pp ./config/database.yml
+  {"development"=>
+    {"encoding"=>"utf8",
+     "username"=>"root",
+     "adapter"=>"mysql",
+     "host"=>"localhost",
+     "password"=>nil,
+     "database"=>"appname_test",
+     "pool"=>5}, 
+  :
 
 Parse JSON and pp.
 
-  pp http://api.twitter.com/1/statuses/public_timeline.json
+  $ pp http://api.twitter.com/1/statuses/public_timeline.json
+  [{"user"=>
+     {"name"=>"septiasabatina",
+      "profile_sidebar_fill_color"=>"FFFFFF",
+      "profile_sidebar_border_color"=>"FFFFFF",
+      "profile_background_tile"=>true,
+      "profile_link_color"=>"000000",
+      "url"=>"http://example.com",
+      "contributors_enabled"=>false,
+      "favourites_count"=>0,
+      "id"=>123456789,
+      "description"=>"",
+      "utc_offset"=>0,
+      "lang"=>"en",
+  :
 
 Parse HTML and pp (required nokogiri).
 
-  pp http://www.google.com/
+  $ pp http://www.google.com/
+  #(Document:0x96c0ee {
+    name = "document",
+    children = [
+      #(DTD:0x96bb9e { name = "html" }),
+      #(Element:0x96b5cc {
+        name = "html",
+        children = [
+          #(Element:0x96adb6 {
+            name = "head",
+  :
 
-Get URL contents as text, skip 1 line, convert encoding to UTF-8, parse CSV and pp with labels.
+Get URL contents as text, skip 1 line, convert encoding to UTF-8, parse CSV and pp with labels. 
 
-  pp -t http://example.com/example.csv | head -n +1 | nkf -w | pp -C
+  $ pp -t http://example.com/items.csv | head -n +1 | nkf -w | pp -C
 
-
-== Note on Patches/Pull Requests
+==  Note on Patches/Pull Requests
  
 * Fork the project.
 * Make your feature addition or bug fix.
