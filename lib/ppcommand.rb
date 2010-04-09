@@ -65,8 +65,9 @@ class PPCommand
     begin
       require 'nokogiri'
     rescue Exception => e
-      STDERR.puts "'nokogiri' required to parse HTML."
+      STDERR.puts "'nokogiri' is required to parse HTML."
       STDERR.puts "$ sudo gem install nokorigi"
+      return
     end
     doc = Nokogiri.HTML(source)
     # doc.serialize(:encoding => 'UTF-8', :save_with =>  Nokogiri::XML::Node::SaveOptions::FORMAT | Nokogiri::XML::Node::SaveOptions::AS_XML)
