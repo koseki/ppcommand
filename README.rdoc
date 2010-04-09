@@ -6,14 +6,17 @@ Parse and pp YAML/JSON/XML/CSV/HTML.
 
   $ pp --help
   pp [options] [file|URI]
-      -y, --yaml                       parse YAML and pp.
+      -c, --csv                        parse CSV and pp.
+      -C, --csvtable                   parse CSV, add labels and pp.
+      -H, --html                       parse HTML and pp.
       -j, --json                       parse JSON and pp.
       -x, --xml                        parse XML using REXML and pp.
       -X, --xmlsimple                  parse XML using XMLSimple and pp.
-      -c, --csv                        parse CSV and pp.
-      -C, --csvtable                   parse CSV, add labels and pp.
-      -h, --html                       parse HTML and pp.
+      -y, --yaml                       parse YAML and pp.
       -t, --text                       do not parse. print plain text.
+      -h, --help                       show this help.
+      -v, --version                    show version.
+
 
 == Examples
 
