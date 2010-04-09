@@ -5,8 +5,8 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "ppcommand"
-    gem.summary = %Q{pretty print YAML/JSON/XML}
-    gem.description = %Q{pretty print YAML/JSON/XML}
+    gem.summary = %Q{Parse and pp YAML/JSON/XML/CSV/HTML}
+    gem.description = %Q{Parse and pp YAML/JSON/XML/CSV/HTML}
     gem.email = "koseki@gmail.com"
     gem.homepage = "http://github.com/koseki/ppcommand"
     gem.authors = ["KOSEKI Kengo"]
