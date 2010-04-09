@@ -27,11 +27,50 @@ class PPCommand
     require 'json'
     pp JSON.parse(source)
   end
-
+  
   def pp_yaml(source)
     YAML.each_document(StringIO.new(source)) do |obj|
       pp obj
     end
+  end
+  
+  def pp_csv(source)
+    require 'csv'
+    pp CSV.parse(source)
+  end
+
+  def pp_csv2(source)
+    require 'csv'
+    data = CSV.parse(source)
+    keys = data.shift
+    result = []
+    data.each do |values|
+      entry = []
+      i = nil
+      keys.each_with_index do |k, i|
+        entry << [i, k, values[i]]
+      end
+      if keys.length < values.length
+        values[i + 1 .. -1].each_with_index do |v, j|
+          entry << [i + j + 1, nil, v]
+        end
+      end
+      result << entry
+    end
+    pp result
+    # data.map {|values| Hash[* [keys,values].transpose.flatten] }
+  end
+
+  def pp_html(source)
+    begin
+      require 'nokogiri'
+    rescue Exception => e
+      STDERR.puts "'nokogiri' required to parse HTML."
+      STDERR.puts "$ sudo gem install nokorigi"
+    end
+    doc = Nokogiri.HTML(source)
+    # doc.serialize(:encoding => 'UTF-8', :save_with =>  Nokogiri::XML::Node::SaveOptions::FORMAT | Nokogiri::XML::Node::SaveOptions::AS_XML)
+    pp doc
   end
 
   def execute(argv)
@@ -43,6 +82,9 @@ class PPCommand
     opp.on("-j", "--json", "parse JSON and pp."){|x| opts[:type] = "json"}
     opp.on("-x", "--xml", "parse XML using REXML and pp."){|x| opts[:type] = "xml"}
     opp.on("-X", "--xmlsimple", "parse XML using XMLSimple and pp."){|x| opts[:type] = "xmlsimple"}
+    opp.on("-c", "--csv", "parse CSV and pp."){|x| opts[:type] = "csv"}
+    opp.on("-C", "--csvtable", "parse CSV, add labels and pp."){|x| opts[:type] = "csvhash"}
+    opp.on("-h", "--html", "parse HTML and pp."){|x| opts[:type] = "html"}
     opp.on("-t", "--text", "do not parse. print plain text."){|x| opts[:type] = "text"}
     opp.parse!(argv)
 
@@ -61,6 +103,10 @@ class PPCommand
             opts[:type] = "json"
           elsif t =~ /yaml/
             opts[:type] = "yaml"
+          elsif t =~ /csv/
+            opts[:type] = "csv"
+          elsif t =~ /html/
+            opts[:type] = "html"
           elsif t =~ /xml/
             opts[:type] = "xml"
           end
@@ -71,10 +117,14 @@ class PPCommand
     end
 
     if opts[:type] == "auto"
-      if file =~ /\.xml$/
+      if file =~ /\.xml$/i
         opts[:type] = "xml"
-      elsif file =~ /\.json$/
+      elsif file =~ /\.json$/i
         opts[:type] = "json"
+      elsif file =~ /\.(?:csv|txt)$/i
+        opts[:type] = "csv"
+      elsif file =~ /\.html$/i
+        opts[:type] = "html"
       else
         opts[:type] = "yaml"
       end
@@ -87,6 +137,12 @@ class PPCommand
       pp_xmlsimple(source)
     when "json"
       pp_json(source)
+    when "csv"
+      pp_csv(source)
+    when "csvhash"
+      pp_csv_as_hash(source)
+    when "html"
+      pp_html(source)
     when "text"
       puts source
     else "yaml"

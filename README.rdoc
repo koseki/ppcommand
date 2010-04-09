@@ -1,6 +1,6 @@
 = ppcommand
 
-pretty print YAML/JSON/XML.
+Parse and pp YAML/JSON/XML/CSV/HTML.
 
 == Usage
 
@@ -10,7 +10,29 @@ pretty print YAML/JSON/XML.
       -j, --json                       parse JSON and pp.
       -x, --xml                        parse XML using REXML and pp.
       -X, --xmlsimple                  parse XML using XMLSimple and pp.
+      -c, --csv                        parse CSV and pp.
+      -C, --csvtable                   parse CSV, add labels and pp.
+      -h, --html                       parse HTML and pp.
       -t, --text                       do not parse. print plain text.
+
+== Examples
+
+Parse YAML and pp.
+
+  pp ./config/database.yml
+
+Parse JSON and pp.
+
+  pp http://api.twitter.com/1/statuses/public_timeline.json
+
+Parse HTML and pp (required nokogiri).
+
+  pp http://www.google.com/
+
+Get URL contents as text, skip 1 line, convert encoding to UTF-8, parse CSV and pp with labels.
+
+  pp -t http://example.com/example.csv | head -n +1 | nkf -w | pp -C
+
 
 == Note on Patches/Pull Requests
  

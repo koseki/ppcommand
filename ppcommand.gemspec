@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{ppcommand}
-  s.version = "0.1.0"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["KOSEKI Kengo"]
-  s.date = %q{2010-01-08}
+  s.date = %q{2010-04-09}
   s.default_executable = %q{pp}
   s.description = %q{pretty print YAML/JSON/XML}
   s.email = %q{koseki@gmail.com}
@@ -27,6 +27,7 @@ Gem::Specification.new do |s|
      "VERSION",
      "bin/pp",
      "lib/ppcommand.rb",
+     "ppcommand.gemspec",
      "spec/ppcommand_spec.rb",
      "spec/spec.opts",
      "spec/spec_helper.rb"
