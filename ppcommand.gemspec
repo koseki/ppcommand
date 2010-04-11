@@ -5,13 +5,13 @@
 
 Gem::Specification.new do |s|
   s.name = %q{ppcommand}
-  s.version = "0.1.3"
+  s.version = "0.1.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["KOSEKI Kengo"]
-  s.date = %q{2010-04-09}
+  s.date = %q{2010-04-11}
   s.default_executable = %q{pp}
-  s.description = %q{pretty print YAML/JSON/XML}
+  s.description = %q{Parse and pp YAML/JSON/XML/CSV/HTML}
   s.email = %q{koseki@gmail.com}
   s.executables = ["pp"]
   s.extra_rdoc_files = [
@@ -36,7 +36,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.5}
-  s.summary = %q{pretty print YAML/JSON/XML}
+  s.summary = %q{Parse and pp YAML/JSON/XML/CSV/HTML}
   s.test_files = [
     "spec/ppcommand_spec.rb",
      "spec/spec_helper.rb"
