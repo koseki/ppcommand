@@ -65,9 +65,21 @@ Parse HTML and pp (required nokogiri).
             name = "head",
   :
 
-Get URL contents as text, skip 1 line, convert encoding to UTF-8, parse CSV and pp with labels. 
+Get URL contents as text, skip 3 line, convert encoding to UTF-8, parse CSV and pp with labels. When using --csvtable(-C), the first line treated as label.
 
-  $ pp -t http://example.com/items.csv | head -n +1 | nkf -w | pp -C
+  $ pp -t http://example.com/items.csv | head -n +3 | nkf -w | pp -C
+  [[[0, "name", "apple"],
+    [1, "price", "100"],
+    [2, "amount", "99"],
+    [3, "label1", "aaa"],
+    [4, "label2", "bbb"],
+    [5, "label3", "ccc"]],
+   [[0, "name", "orange"],
+    [1, "price", "123"],
+    [2, "amount", "10"],
+    [3, "label1", "xxx"],
+    [4, "label2", "yyy"],
+    [5, "label3", "zzz"]]]
 
 ==  Note on Patches/Pull Requests
  
