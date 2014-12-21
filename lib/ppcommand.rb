@@ -1,8 +1,8 @@
-require "ppcommand/version"
-require "ppcommand/main"
+require 'ppcommand/version'
+require 'ppcommand/cli'
 
 module PPCommand
   def self.execute
-    PPCommand::Main.new.execute(ARGV)
+    PPCommand::CLI.execute(ARGV)
   end
 end

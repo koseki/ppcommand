@@ -1,109 +1,15 @@
 # coding: utf-8
 
-require 'pp'
+require 'awesome_print'
 require 'yaml'
-require 'optparse'
 
 module PPCommand
   class Main
-
-    def pp_xml(source)
-      require 'rubygems'
-      require 'rexml/document'
-      puts pretty_xml(REXML::Document.new(source))
-    end
-
-    def pp_xmlsimple(source)
-      require 'rubygems'
-      require 'xmlsimple'
-      pp XmlSimple.xml_in(source)
-    end
-
-    def pp_json(source)
-      require 'rubygems'
-      require 'json'
-      pp JSON.parse(source)
-    end
-
-    def pp_yaml(source)
-      YAML.each_document(StringIO.new(source)) do |obj|
-        pp obj
-      end
-    end
-
-    def pp_csv(source)
-      require 'csv'
-      pp CSV.parse(source)
-    end
-
-    def pp_csvtable(source)
-      require 'csv'
-      data = CSV.parse(source)
-      keys = data.shift
-      result = []
-      data.each do |values|
-        entry = []
-        i = nil
-        keys.each_with_index do |k, i|
-          entry << [i, k, values[i]]
-        end
-        if keys.length < values.length
-          values[i + 1 .. -1].each_with_index do |v, j|
-            entry << [i + j + 1, nil, v]
-          end
-        end
-        result << entry
-      end
-      pp result
-      # data.map {|values| Hash[* [keys,values].transpose.flatten] }
-    end
-
-    def pp_html(source)
-      begin
-        require 'nokogiri'
-      rescue Exception => e
-        STDERR.puts "'nokogiri' is required to parse HTML."
-        STDERR.puts "$ gem install nokorigi"
-        return
-      end
-      doc = Nokogiri.HTML(source)
-      # doc.serialize(:encoding => 'UTF-8', :save_with =>  Nokogiri::XML::Node::SaveOptions::FORMAT | Nokogiri::XML::Node::SaveOptions::AS_XML)
-      pp doc
-    end
-
-    def execute(argv)
-      opts = {:type => "auto"}
-      opp = OptionParser.new
-
-      opp.banner = "pp [options] [file|URI]"
-      opp.on_tail("-h", "--help", "show this help.") do
-        puts opp
-        exit
-      end
-      opp.on_tail("-v", "--version", "show version.") do
-        puts "ppcommand #{ PPCommand::VERSION }"
-        exit
-      end
-
-      opp.on("-c", "--csv", "parse CSV and pp."){|x| opts[:type] = "csv"}
-      opp.on("-C", "--csvtable", "parse CSV, add labels and pp."){|x| opts[:type] = "csvtable"}
-      opp.on("-H", "--html", "parse HTML and pp."){|x| opts[:type] = "html"}
-      opp.on("-j", "--json", "parse JSON and pp."){|x| opts[:type] = "json"}
-      opp.on("-x", "--xml", "parse XML using REXML and pp."){|x| opts[:type] = "xml"}
-      opp.on("-X", "--xmlsimple", "parse XML using XMLSimple and pp."){|x| opts[:type] = "xmlsimple"}
-      opp.on("-y", "--yaml", "parse YAML and pp."){|x| opts[:type] = "yaml"}
-
-      opp.on("-t", "--text", "do not parse. print plain text."){|x| opts[:type] = "text"}
-
-      opp.parse!(argv)
-
-      file = argv.shift
-
-      source = ""
+    def execute(opts, file)
+      source = ''
       if file.nil?
         source = STDIN.read
       elsif file=~ %r{^https?://}
-        require 'open-uri'
         open(file) do |io|
           source = io.read
           if opts[:type] == "auto"
@@ -157,6 +63,70 @@ module PPCommand
       else "yaml"
         pp_yaml(source)
       end
+    end
+
+    def pp_xml(source)
+      require 'rubygems'
+      require 'rexml/document'
+      puts pretty_xml(REXML::Document.new(source))
+    end
+
+    def pp_xmlsimple(source)
+      require 'rubygems'
+      require 'xmlsimple'
+      ap XmlSimple.xml_in(source)
+    end
+
+    def pp_json(source)
+      require 'rubygems'
+      require 'json'
+      ap JSON.parse(source)
+    end
+
+    def pp_yaml(source)
+      YAML.each_document(StringIO.new(source)) do |obj|
+        ap obj
+      end
+    end
+
+    def pp_csv(source)
+      require 'csv'
+      ap CSV.parse(source)
+    end
+
+    def pp_csvtable(source)
+      require 'csv'
+      data = CSV.parse(source)
+      keys = data.shift
+      result = []
+      data.each do |values|
+        entry = []
+        i = nil
+        keys.each_with_index do |k, i|
+          entry << [i, k, values[i]]
+        end
+        if keys.length < values.length
+          values[i + 1 .. -1].each_with_index do |v, j|
+            entry << [i + j + 1, nil, v]
+          end
+        end
+        result << entry
+      end
+      ap result
+      # data.map {|values| Hash[* [keys,values].transpose.flatten] }
+    end
+
+    def pp_html(source)
+      begin
+        require 'nokogiri'
+      rescue Exception => e
+        STDERR.puts "'nokogiri' is required to parse HTML."
+        STDERR.puts "$ gem install nokorigi"
+        return
+      end
+      doc = Nokogiri.HTML(source)
+      # doc.serialize(:encoding => 'UTF-8', :save_with =>  Nokogiri::XML::Node::SaveOptions::FORMAT | Nokogiri::XML::Node::SaveOptions::AS_XML)
+      ap doc
     end
 
     # original from http://snippets.dzone.com/posts/show/4953
