@@ -1,13 +1,7 @@
 #!/usr/bin/env ruby
 
-unless defined? Gem
-  $:.unshift File.dirname(__FILE__) + "/../lib"
-end
+$:.unshift File.join(File.dirname(__FILE__), '../lib')
 
-begin
-  require 'rubygems'
-  require 'ppcommand'
-  PPCommand.execute
-rescue LoadError
-end
+require 'ppcommand'
 
+PPCommand.execute
