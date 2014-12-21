@@ -21,19 +21,19 @@ class PPCommand
     require 'xmlsimple'
     pp XmlSimple.xml_in(source)
   end
-  
+
   def pp_json(source)
     require 'rubygems'
     require 'json'
     pp JSON.parse(source)
   end
-  
+
   def pp_yaml(source)
     YAML.each_document(StringIO.new(source)) do |obj|
       pp obj
     end
   end
-  
+
   def pp_csv(source)
     require 'csv'
     pp CSV.parse(source)
@@ -141,7 +141,7 @@ class PPCommand
         opts[:type] = "yaml"
       end
     end
-    
+
     case opts[:type]
     when "xml"
       pp_xml(source)
@@ -162,7 +162,6 @@ class PPCommand
     end
   end
 
-
   # original from http://snippets.dzone.com/posts/show/4953
   def x_pretty_print(parent_node, itab)
     buffer = ''
@@ -172,22 +171,22 @@ class PPCommand
         buffer += ">"
         if node.text.nil?
           buffer += "\n"
-          buffer += x_pretty_print(node,itab+2) 
+          buffer += x_pretty_print(node,itab+2)
           buffer += ' ' * itab + "</#{node.name}>\n"
         else
           node_text = node.text.strip
           if node_text != ''
-            buffer += node_text 
-            buffer += "</#{node.name}>\n"        
+            buffer += node_text
+            buffer += "</#{node.name}>\n"
           else
-            buffer += "\n" + x_pretty_print(node,itab+2) 
-            buffer += ' ' * itab + "</#{node.name}>\n"        
+            buffer += "\n" + x_pretty_print(node,itab+2)
+            buffer += ' ' * itab + "</#{node.name}>\n"
           end
         end
       else
         buffer += " />\n"
       end
-      
+
     end
     buffer
   end
@@ -197,7 +196,7 @@ class PPCommand
     node.attributes.each { |attribute, val| att_list += "\n" + (" " * itab) + " #{attribute} = \"#{val}\"" }
     att_list
   end
-  
+
   def pretty_xml(doc)
     buffer = ''
     xml_declaration = doc.to_s.match('<\?.*\?>').to_s
@@ -211,7 +210,4 @@ class PPCommand
       buffer += " />\n"
     end
   end
-
 end
-
-
