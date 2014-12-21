@@ -60,6 +60,8 @@ module PPCommand
         pp_html(source)
       when "text"
         puts source
+      when 'syck'
+        pp_syck(source)
       else "yaml"
         pp_yaml(source)
       end
@@ -84,9 +86,17 @@ module PPCommand
     end
 
     def pp_yaml(source)
-      YAML.each_document(StringIO.new(source)) do |obj|
-        ap obj
-      end
+      objs = YAML.load_stream(source)
+      objs = objs[0] if objs.length == 1
+      ap objs
+    end
+
+    def pp_syck(source)
+      require 'syck'
+      YAML::ENGINE.yamler = 'syck'
+      objs = YAML.load_document(StringIO.new(source))
+      objs = objs[0] if objs.length == 1
+      ap objs
     end
 
     def pp_csv(source)

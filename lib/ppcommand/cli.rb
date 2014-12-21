@@ -28,7 +28,7 @@ module PPCommand
       opp.on("-x", "--xml", "parse XML using REXML and pp."){|x| opts[:type] = "xml"}
       opp.on("-X", "--xmlsimple", "parse XML using XMLSimple and pp."){|x| opts[:type] = "xmlsimple"}
       opp.on("-y", "--yaml", "parse YAML and pp."){|x| opts[:type] = "yaml"}
-
+      opp.on("-Y", "--syck", "parse YAML using Syck and pp."){|x| opts[:type] = 'syck'}
       opp.on("-t", "--text", "do not parse. print plain text."){|x| opts[:type] = "text"}
 
       opp.parse!(argv)
