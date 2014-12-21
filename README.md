@@ -1,9 +1,24 @@
-= ppcommand
+# Ppcommand
 
-Parse and pp YAML/JSON/XML/CSV/HTML.
+Parse and pretty print YAML/JSON/XML/CSV/HTML.
 
-== Usage
+## Installation
 
+Add this line to your application's Gemfile:
+
+    gem 'ppcommand'
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install ppcommand
+
+## Usage
+
+```
   $ pp --help
   pp [options] [file|URI]
       -c, --csv                        parse CSV and pp.
@@ -16,12 +31,13 @@ Parse and pp YAML/JSON/XML/CSV/HTML.
       -t, --text                       do not parse. print plain text.
       -h, --help                       show this help.
       -v, --version                    show version.
+```
 
+## Example
 
-== Examples
+YAML
 
-Parse YAML and pp.
-
+```
   $ pp ./config/database.yml
   {"development"=>
     {"encoding"=>"utf8",
@@ -30,11 +46,13 @@ Parse YAML and pp.
      "host"=>"localhost",
      "password"=>nil,
      "database"=>"appname_test",
-     "pool"=>5}, 
+     "pool"=>5},
   :
+```
 
-Parse JSON and pp.
+JSON (from remote)
 
+```
   $ pp http://api.twitter.com/1/statuses/public_timeline.json
   [{"user"=>
      {"name"=>"septiasabatina",
@@ -50,9 +68,11 @@ Parse JSON and pp.
       "utc_offset"=>0,
       "lang"=>"en",
   :
+```
 
-Parse HTML and pp (required nokogiri).
+HTML (required nokogiri)
 
+```
   $ pp http://www.google.com/
   #(Document:0x96c0ee {
     name = "document",
@@ -64,9 +84,11 @@ Parse HTML and pp (required nokogiri).
           #(Element:0x96adb6 {
             name = "head",
   :
+```
 
 Get URL contents as text, skip 3 lines, convert encoding to UTF-8, parse CSV and pp with labels. When using --csvtable(-C), the first line treated as label.
 
+```
   $ pp -t http://example.com/items.csv | head -n +3 | nkf -w | pp -C
   [[[0, "name", "apple"],
     [1, "price", "100"],
@@ -80,18 +102,12 @@ Get URL contents as text, skip 3 lines, convert encoding to UTF-8, parse CSV and
     [3, "label1", "xxx"],
     [4, "label2", "yyy"],
     [5, "label3", "zzz"]]]
+```
 
-==  Note on Patches/Pull Requests
- 
-* Fork the project.
-* Make your feature addition or bug fix.
-* Add tests for it. This is important so I don't break it in a
-  future version unintentionally.
-* Commit, do not mess with rakefile, version, or history.
-  (if you want to have your own version, that is fine but
-   bump version in a commit by itself I can ignore when I pull)
-* Send me a pull request. Bonus points for topic branches.
+## Contributing
 
-== Copyright
-
-Copyright (c) 2010 KOSEKI Kengo. See LICENSE for details.
+1. Fork it ( https://github.com/[my-github-username]/ppcommand/fork )
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create a new Pull Request
