@@ -94,7 +94,7 @@ module PPCommand
     def pp_syck(source)
       require 'syck'
       YAML::ENGINE.yamler = 'syck'
-      objs = YAML.load_document(StringIO.new(source))
+      objs = YAML.load_stream(StringIO.new(source)).documents
       objs = objs[0] if objs.length == 1
       ap objs
     end
